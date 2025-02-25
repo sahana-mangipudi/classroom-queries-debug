@@ -1,53 +1,88 @@
-class StudentsController < ApplicationController
-  def index
-    @students = Student.all.order({ :created_at => :desc })
+<h1>
+  List of all students
+</h1>
 
-    render({ :template => "students/index" })
-  end
+<hr>
 
-  def show
-    the_id = params.fetch("path_id")
-    @student = Student.where({:id => the_id }).at(0)
+<form action="/insert_student" method="post">
+  <div>
+    <label for="email_box">
+      Email
+    </label>
 
-    render({ :template => "students/show" })
-  end
+    <input type="text" id="email_box" name="query_email">
+  </div>
 
-  def create
-    @student = Student.new
-    @student.first_name = params.fetch("query_first_name")
-    @student.last_name = params.fetch("query_last_name")
-    @student.email = params.fetch("query_email")
+  <div>
+    <label for="first_name_box">
+      First name
+    </label>
 
-    if @student.valid?
-      @student.save
-      redirect_to("/students", { :notice => "Student created successfully." })
-    else
-      redirect_to("/students", { :notice => "Student failed to create successfully." })
-    end
-  end
+    <input type="text" id="first_name_box" name="query_name">
+  </div>
 
-  def update
-    the_id = params.fetch("path_id")
-    @student = Student.where({ :id => the_id }).at(0)
+  <div>
+    <label for="last_name_box">
+      Last name
+    </label>
 
-    @student.first_name = params.fetch("query_first_name")
-    @student.last_name = params.fetch("query_last_name")
-    @student.email = params.fetch("query_email")
+    <input type="text" id="last_name_box" name="query_last_name">
+  </div>
 
-    if @student.valid?
-      @student.save
-      redirect_to("/students/#{@student.id}", { :notice => "Student updated successfully."} )
-    else
-      redirect_to("/students/#{@student.id}", { :alert => "Student failed to update successfully." })
-    end
-  end
+  <button>
+    Create student
+  </button>
+</form>
 
-  def destroy
-    the_id = params.fetch("path_id")
-    @student = Student.where({ :id => the_id }).at(0)
+<hr>
 
-    @student.destroy
+<table class="table" border="1" >
+  <tr>
+    <th>
+      ID
+    </th>
 
-    redirect_to("/students", { :notice => "Student deleted successfully."} )
-  end
-end
+    <th>
+      First name
+    </th>
+
+    <th>
+      Last name
+    </th>
+
+    <th>
+      Email
+    </th>
+
+    <th>
+    </th>
+  </tr>
+
+  <% @students.each do |student| %>
+    <tr>
+      <td>
+        <%= student.id %>
+      </td>
+
+      <td>
+        <%= student.first_name %>
+      </td>
+
+      <td>
+        <%= student.last_name %>
+      </td>
+
+      <td>
+        <%= student.email %>
+      </td>
+
+      <td>
+        <a href="/students/<%= student.id %>">
+          Show details
+        </a>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<hr>
