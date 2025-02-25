@@ -27,24 +27,24 @@ Rails.application.routes.draw do
 
   get("/courses", { :controller => "courses", :action => "index" })
   
-  get("/modify_course/:path_id", { :controller => "courses", :action => "update" })
+  post("/modify_course/:path_id", { :controller => "courses", :action => "update" })
 
   get("/delete_course/:path_id", { :controller => "courses", :action => "destroy" })
 
   #------------------------------
   # Student routes
 
-  get("/students", { :controller => "Students", :action => "index" })
+  get("/students", { :controller => "students", :action => "index" })
   
-  get("/students/:path_id", { :controller => "Students", :action => "show" })
+  get("/students/:path_id", { :controller => "students", :action => "show" })
 
-  post("/insert_student", { :controller => "Students", :action => "create" })
+  post("/insert_student", { :controller => "students", :action => "create" })
 
-  get("/students", { :controller => "Students", :action => "index" })
+  get("/students", { :controller => "students", :action => "index" })
   
-  post("/modify_student/:path_id", { :controller => "Students", :action => "update" })
+  post("/modify_student/:path_id", { :controller => "students", :action => "update" })
 
-  get("/delete_student/:path_id", { :controller => "Students", :action => "destroy" })
+  get("/delete_student/:path_id", { :controller => "students", :action => "destroy" })
 
   #------------------------------
 
